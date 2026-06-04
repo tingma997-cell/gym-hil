@@ -83,7 +83,7 @@ imageio.mimsave("franka_render_test.mp4", frames, fps=20)
 
 ## SO-101 Environment Quick Start
 
-The SO-101 model is provided as both a minimal URDF scaffold (`gym_hil/assets/so101.urdf`) and a runnable MuJoCo XML asset (`gym_hil/assets/so101.xml`) because this package loads MuJoCo models directly. If you start from an upstream SO-101 URDF, convert it to MJCF or mirror its kinematic chain in `gym_hil/assets/so101.xml`, then use `gym_hil/assets/so101_pick_scene.xml` as the task scene.
+The SO-101 model is provided as a runnable MuJoCo XML asset (`gym_hil/assets/so101.xml`) because this package loads MuJoCo models directly. If you start from an upstream SO-101 URDF, convert it to MJCF or mirror its kinematic chain in `gym_hil/assets/so101.xml`, then use `gym_hil/assets/so101_pick_scene.xml` as the task scene.
 
 ```python
 import gymnasium as gym
