@@ -26,6 +26,7 @@ import gym_hil  # noqa: F401
     [
         ("PandaPickCubeBase-v0", False),
         ("PandaPickCubeBase-v0", True),
+        ("SO101PickCubeBase-v0", False),
     ],
 )
 def test_hil(env_task, image_obs):

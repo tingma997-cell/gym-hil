@@ -51,7 +51,7 @@ test = ["pytest>=8.1.0", "pytest-cov>=5.0.0"]
 
 [tool.poetry]
 requires-poetry = ">=2.1"
-include = ["gym_hil/controller_config.json"]
+include = ["gym_hil/controller_config.json", "gym_hil/assets/**/*"]
 
 [tool.ruff]
 line-length = 110
