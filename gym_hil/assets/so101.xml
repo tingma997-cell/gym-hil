@@ -1,0 +1,86 @@
+<mujoco model="so101">
+  <compiler angle="radian" autolimits="true"/>
+
+  <default>
+    <default class="so101">
+      <joint damping="0.60" frictionloss="0.052" armature="0.028" limited="true"/>
+      <position kp="120" kv="3" forcerange="-3.35 3.35"/>
+      <geom contype="1" conaffinity="1" density="650" friction="0.8 0.1 0.1"/>
+      <site size="0.006" rgba="0.1 0.7 1 1" group="4"/>
+      <default class="so101/visual">
+        <geom contype="0" conaffinity="0" group="2" rgba="1 0.82 0.12 1"/>
+      </default>
+      <default class="so101/collision">
+        <geom group="3" rgba="1 0.82 0.12 0.35"/>
+      </default>
+      <default class="so101/servo">
+        <geom type="box" size="0.018 0.018 0.014" rgba="0.1 0.1 0.1 1"/>
+      </default>
+    </default>
+  </default>
+
+  <worldbody>
+    <body name="so101_base" pos="0 0 0" childclass="so101">
+      <geom name="so101_base_plate" type="box" size="0.055 0.045 0.012" pos="0 0 0.012" class="so101/visual"/>
+      <geom name="so101_base_collision" type="box" size="0.055 0.045 0.012" pos="0 0 0.012" class="so101/collision"/>
+      <geom name="so101_base_servo" pos="0 0 0.043" class="so101/servo"/>
+
+      <body name="so101_shoulder" pos="0 0 0.072">
+        <joint name="shoulder_pan" type="hinge" axis="0 0 1" range="-1.91986 1.91986"/>
+        <geom name="so101_shoulder_servo" pos="0 0 0" class="so101/servo"/>
+        <geom name="so101_shoulder_link" type="capsule" fromto="0 0 0 0.04 0 0.025" size="0.018" class="so101/visual"/>
+        <geom name="so101_shoulder_link_collision" type="capsule" fromto="0 0 0 0.04 0 0.025" size="0.018" class="so101/collision"/>
+
+        <body name="so101_upper_arm" pos="0.04 0 0.025" quat="0.7071068 0 0.7071068 0">
+          <joint name="shoulder_lift" type="hinge" axis="0 0 1" range="-1.74533 1.74533"/>
+          <geom name="so101_upper_servo" pos="0 0 0" class="so101/servo"/>
+          <geom name="so101_upper_arm" type="capsule" fromto="0 0 0 0.14 0 0" size="0.018" class="so101/visual"/>
+          <geom name="so101_upper_arm_collision" type="capsule" fromto="0 0 0 0.14 0 0" size="0.018" class="so101/collision"/>
+
+          <body name="so101_lower_arm" pos="0.14 0 0">
+            <joint name="elbow_flex" type="hinge" axis="0 0 1" range="-1.69 1.69"/>
+            <geom name="so101_elbow_servo" pos="0 0 0" class="so101/servo"/>
+            <geom name="so101_lower_arm" type="capsule" fromto="0 0 0 0.135 0 0" size="0.016" class="so101/visual"/>
+            <geom name="so101_lower_arm_collision" type="capsule" fromto="0 0 0 0.135 0 0" size="0.016" class="so101/collision"/>
+
+            <body name="so101_wrist" pos="0.135 0 0">
+              <joint name="wrist_flex" type="hinge" axis="0 0 1" range="-1.65806 1.65806"/>
+              <geom name="so101_wrist_servo" pos="0 0 0" class="so101/servo"/>
+              <geom name="so101_wrist_link" type="capsule" fromto="0 0 0 0.055 0 0" size="0.014" class="so101/visual"/>
+              <geom name="so101_wrist_link_collision" type="capsule" fromto="0 0 0 0.055 0 0" size="0.014" class="so101/collision"/>
+
+              <body name="so101_gripper_roll" pos="0.055 0 0" quat="0.7071068 0.7071068 0 0">
+                <joint name="wrist_roll" type="hinge" axis="1 0 0" range="-2.74385 2.84121"/>
+                <geom name="so101_roll_servo" pos="0 0 0" class="so101/servo"/>
+                <camera name="handcam_rgb" pos="-0.025 0 0.045" quat="0.5 -0.5 -0.5 0.5" fovy="70"/>
+
+                <body name="so101_gripper" pos="0.035 0 0">
+                  <joint name="gripper" type="hinge" axis="0 0 1" range="-0.17453 1.74533"/>
+                  <geom name="so101_gripper_palm" type="box" size="0.018 0.012 0.012" pos="0 0 0" class="so101/visual"/>
+                  <geom name="so101_gripper_palm_collision" type="box" size="0.018 0.012 0.012" pos="0 0 0" class="so101/collision"/>
+                  <geom name="so101_fixed_finger" type="box" size="0.008 0.006 0.035" pos="0.026 -0.018 0" class="so101/collision"/>
+                  <geom name="so101_moving_finger" type="box" size="0.008 0.006 0.035" pos="0.026 0.018 0" class="so101/collision"/>
+                  <site name="pinch" pos="0.035 0 0"/>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <position name="shoulder_pan" joint="shoulder_pan" ctrlrange="-1.91986 1.91986"/>
+    <position name="shoulder_lift" joint="shoulder_lift" ctrlrange="-1.74533 1.74533"/>
+    <position name="elbow_flex" joint="elbow_flex" ctrlrange="-1.69 1.69"/>
+    <position name="wrist_flex" joint="wrist_flex" ctrlrange="-1.65806 1.65806"/>
+    <position name="wrist_roll" joint="wrist_roll" ctrlrange="-2.74385 2.84121"/>
+    <position name="gripper" joint="gripper" ctrlrange="-0.17453 1.74533"/>
+  </actuator>
+
+  <sensor>
+    <framepos name="so101/pinch_pos" objtype="site" objname="pinch"/>
+    <framequat name="so101/pinch_quat" objtype="site" objname="pinch"/>
+  </sensor>
+</mujoco>

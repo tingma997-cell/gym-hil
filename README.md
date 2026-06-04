@@ -8,6 +8,7 @@ The `gym-hil` package provides environments designed for human-in-the-loop reinf
 
 Currently available environments:
 - **Franka Panda Robot**: A robotic manipulation environment for Franka Panda robot based on MuJoCo
+- **SO-101 Robot**: A joint-position SO-101 manipulation environment based on MuJoCo
 
 **What is Human-In-the-Loop (HIL) RL?**
 
@@ -79,6 +80,25 @@ env.close()
 imageio.mimsave("franka_render_test.mp4", frames, fps=20)
 ```
 
+
+## SO-101 Environment Quick Start
+
+The SO-101 model is provided as both a minimal URDF scaffold (`gym_hil/assets/so101.urdf`) and a runnable MuJoCo XML asset (`gym_hil/assets/so101.xml`) because this package loads MuJoCo models directly. If you start from an upstream SO-101 URDF, convert it to MJCF or mirror its kinematic chain in `gym_hil/assets/so101.xml`, then use `gym_hil/assets/so101_pick_scene.xml` as the task scene.
+
+```python
+import gymnasium as gym
+
+import gym_hil
+
+env = gym.make("gym_hil/SO101PickCubeBase-v0", image_obs=False)
+obs, info = env.reset()
+for _ in range(100):
+    obs, reward, terminated, truncated, info = env.step(env.action_space.sample())
+    if terminated or truncated:
+        obs, info = env.reset()
+env.close()
+```
+
 ## Available Environments
 
 ### Franka Panda Robot Environments
@@ -86,6 +106,11 @@ imageio.mimsave("franka_render_test.mp4", frames, fps=20)
 - **PandaPickCubeBase-v0**: The core environment with the Franka arm and a cube to pick up.
 - **PandaPickCubeGamepad-v0**: Includes gamepad control for teleoperation.
 - **PandaPickCubeKeyboard-v0**: Includes keyboard control for teleoperation.
+
+### SO-101 Robot Environments
+
+- **SO101PickCubeBase-v0**: The core environment with a 6-DOF SO-101 arm and a cube to pick up.
+- **SO101PickCubeViewer-v0**: Adds the passive MuJoCo viewer wrapper for interactive visualization.
 
 ## Teleoperation
 

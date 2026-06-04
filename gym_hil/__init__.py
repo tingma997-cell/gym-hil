@@ -44,6 +44,19 @@ register(
     max_episode_steps=100,
 )
 
+
+register(
+    id="gym_hil/SO101PickCubeBase-v0",
+    entry_point="gym_hil.envs:SO101PickCubeGymEnv",
+    max_episode_steps=100,
+)
+
+register(
+    id="gym_hil/SO101PickCubeViewer-v0",
+    entry_point=lambda **kwargs: PassiveViewerWrapper(gym.make("gym_hil/SO101PickCubeBase-v0", **kwargs)),
+    max_episode_steps=100,
+)
+
 # Register the viewer wrapper
 register(
     id="gym_hil/PandaPickCubeViewer-v0",
